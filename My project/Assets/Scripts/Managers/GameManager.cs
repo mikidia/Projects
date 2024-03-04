@@ -11,8 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]float minLight;
     [SerializeField] float maxLight;
     [SerializeField]Light2D light;
-    [SerializeField] int 
-    [NonSerialized]bool inverse = false;
+    [SerializeField]bool inverse = false;
 
     #endregion
 
@@ -29,31 +28,32 @@ public class GameManager : MonoBehaviour
 
     public void Inverse () {
         inverse = !inverse;
-        changeGameSchene();
+        StartCoroutine("SmoothChangeLightIntensivity");
     }
-    private void  changeGameSchene () 
-    {
-       if (inverse) 
-        {
-            light.intensity = minLight;
 
-        }
-        else 
-        {
-            light.intensity = maxLight; 
-        
-        }
-    
-    
-    }
 
 
     IEnumerator SmoothChangeLightIntensivity () 
     {
-        for (int i = 0; )
-        yield return new WaitForSeconds(0.05f); 
-    
-    
+        for (int i = 0; i<=3; i++ )
+        {
+            if (inverse && light.intensity >=0.1f)
+            {
+                light.intensity -= (maxLight-minLight)/4;
+
+            }
+            else if (!inverse && light.intensity <0.99f)
+            {
+                light.intensity += (maxLight-minLight)/4;
+
+            }
+            yield return new WaitForSeconds(0.1f);
+
+
+
+        }
+
+
     }
 
 
