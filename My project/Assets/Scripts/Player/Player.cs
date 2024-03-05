@@ -240,17 +240,16 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log(timesPassed);
+            //Debug.Log(timesPassed);
             yield return new WaitForSeconds(jumpBufferWaitTime);
             if (bufferCdTime / jumpBufferWaitTime >= timesPassed)
             {
                 if (IsGrounded() == true && isSpacePressed)
                 {
-                    //rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
-                    rigidBody.AddForce(Vector2.up * jumpHeihgt*2, ForceMode2D.Impulse);
+                    rigidBody.velocity = new Vector2(rigidBody.velocity.x,0);
+                    rigidBody.AddForce(Vector2.up * jumpHeihgt, ForceMode2D.Impulse);
                     gameManager.Inverse();
                     isSpacePressed = false;
-                    print("jump");
                     break;
                 }
                 timesPassed++;

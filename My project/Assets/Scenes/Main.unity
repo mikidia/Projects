@@ -926,7 +926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &698814719
 Transform:
   m_ObjectHideFlags: 0
@@ -936,7 +936,7 @@ Transform:
   m_GameObject: {fileID: 698814718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.29, y: 1.33, z: 0}
+  m_LocalPosition: {x: 21.14229, y: 3.28, z: 0}
   m_LocalScale: {x: 2.69, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1066,7 +1066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &800080413
 Transform:
   m_ObjectHideFlags: 0
@@ -1076,7 +1076,7 @@ Transform:
   m_GameObject: {fileID: 800080412}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.51771, y: 1.33, z: 0}
+  m_LocalPosition: {x: 29.37, y: 3.28, z: 0}
   m_LocalScale: {x: 2.69, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1262,6 +1262,10 @@ PrefabInstance:
     - target: {fileID: 3458726092152508959, guid: bd38cc7a198249b4b961dba8672b9ba1, type: 3}
       propertyPath: m_Name
       value: Ground static
+      objectReference: {fileID: 0}
+    - target: {fileID: 3458726092152508959, guid: bd38cc7a198249b4b961dba8672b9ba1, type: 3}
+      propertyPath: m_TagString
+      value: Light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1630,12 +1634,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b0aafec74e0dba45abc72de586d3276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 10
   jumpHeihgt: 7
   groundCheckDistance: 0.8
   offset: {x: 0.6, y: 0, z: 0}
   isSpacePressed: 0
-  isJumpBufferOn: 1
+  isJumpBufferOn: 0
   jumpBufferWaitTime: 0.01
   groundBufferCheckDistance: 1
   bufferCdTime: 0.5
@@ -1841,6 +1845,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ground static
       objectReference: {fileID: 0}
+    - target: {fileID: 3458726092152508959, guid: bd38cc7a198249b4b961dba8672b9ba1, type: 3}
+      propertyPath: m_TagString
+      value: Light
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1854,6 +1862,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 851880547}
     m_Modifications:
+    - target: {fileID: 5687712860278883, guid: c5479f8ea0c2ab7479ae3ef772335601, type: 3}
+      propertyPath: _fallTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1084701281276380692, guid: c5479f8ea0c2ab7479ae3ef772335601, type: 3}
       propertyPath: m_LocalScale.x
       value: 9.181219

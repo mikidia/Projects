@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,13 +31,16 @@ public class GameManager : MonoBehaviour
         darkObjects = GameObject.FindGameObjectsWithTag("Dark");
         light =  GameObject.Find("Light 2D").GetComponent<Light2D>();
 
-        Switcher();
-
-
-        
-
-
     }
+
+
+    public void FixedUpdate () 
+    {
+        Switcher();
+        Debugs();
+    }
+
+
     public void Inverse () {
         inverse = !inverse;
         StartCoroutine("SmoothChangeLightIntensivity");
@@ -91,11 +96,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
-       void  FixedUpdate () 
-    {
-        Debugs();
-
-    } 
 
 #endif
 
