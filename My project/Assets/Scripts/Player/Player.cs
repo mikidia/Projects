@@ -11,12 +11,26 @@ public class Player : MonoBehaviour
 
     [SerializeField]int speed;
     [SerializeField]float jumpHeihgt;
-    [SerializeField]float jumpBufferTime;
     [SerializeField]float groundCheckDistance = 0;
-    [SerializeField]float groundBufferCheckDistance;
+
     [SerializeField]Vector3 offset;
 
-    [NonSerialized]static bool jumpTriger;
+    [Header("Jump Buffer Settings")]
+    [SerializeField]bool  isSpacePressed;
+    [SerializeField]bool isJumpBufferOn;
+    [SerializeField]float jumpBufferWaitTime;
+    [SerializeField]float groundBufferCheckDistance;
+
+    [Range(0.01f,9999)]
+    [SerializeField] float bufferCdTime ;
+
+
+
+
+    [SerializeField]float timesPassed;
+    [NonSerialized]Vector2 facingDirection;
+    [NonSerialized]bool jumpTriger;
+
 
     [Header("Settings")]
 
@@ -25,14 +39,11 @@ public class Player : MonoBehaviour
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]LayerMask whatIsPlatform;
     [SerializeField]int _score=0;
-    [SerializeField]bool  isSpacePressed;
 
     [NonSerialized]Rigidbody2D rigidBody;
     [NonSerialized]bool death = false;
-    [NonSerialized]Vector2 facingDirection;
     [NonSerialized]Animator anim;
     [NonSerialized]GameManager gameManager;
-    [NonSerialized]bool isStay;
 
 
 
@@ -99,14 +110,20 @@ public class Player : MonoBehaviour
         }
 
     }
+#if UNITY_EDITOR
     private void Debugs ()
     {
 
         Debug.DrawRay(transform.position - offset, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(transform.position + offset, Vector2.down * groundCheckDistance, Color.red);
 
+        Debug.DrawRay(transform.position - offset, Vector2.down * groundBufferCheckDistance, Color.yellow);
+        Debug.DrawRay(transform.position + offset, Vector2.down * groundBufferCheckDistance, Color.yellow);
+
         Debug.DrawRay(transform.position, facingDirection * groundCheckDistance, Color.blue);
+
     }
+#endif
     public bool IsGrounded ()
 
     {
@@ -135,14 +152,14 @@ public class Player : MonoBehaviour
 
     {
 
-        RaycastHit2D Groundhit = Physics2D.Raycast(transform.position-offset, Vector2.down, groundBufferCheckDistance, whatIsGround);
-        RaycastHit2D Groundhit2 = Physics2D.Raycast(transform.position+offset, Vector2.down, groundBufferCheckDistance, whatIsGround);
+        RaycastHit2D bufferGroundhit = Physics2D.Raycast(transform.position-offset, Vector2.down, groundBufferCheckDistance, whatIsGround);
+        RaycastHit2D bufferGroundhit2 = Physics2D.Raycast(transform.position+offset, Vector2.down, groundBufferCheckDistance, whatIsGround);
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position-offset, Vector2.down, groundBufferCheckDistance, whatIsPlatform);
-        RaycastHit2D hit2 = Physics2D.Raycast(transform.position+offset, Vector2.down, groundBufferCheckDistance, whatIsPlatform);
+        RaycastHit2D bufferhit = Physics2D.Raycast(transform.position-offset, Vector2.down, groundBufferCheckDistance, whatIsPlatform);
+        RaycastHit2D bufferhit2 = Physics2D.Raycast(transform.position+offset, Vector2.down, groundBufferCheckDistance, whatIsPlatform);
 
 
-        if (Groundhit || hit || hit2 || Groundhit2)
+        if (bufferGroundhit || bufferhit || bufferhit2 || bufferGroundhit2)
         {
 
             return true;
@@ -160,20 +177,24 @@ public class Player : MonoBehaviour
 
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() != false)
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() != false && !isSpacePressed)
         {
 
             rigidBody.AddForce(Vector2.up * jumpHeihgt, ForceMode2D.Impulse);
+            gameManager.Switcher();
             gameManager.Inverse();
-            isSpacePressed = false;
+            if (isJumpBufferOn)
+            {
+                isSpacePressed = false;
+            }
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() == false && !isSpacePressed)
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() == false && !isSpacePressed && isJumpBufferOn)
         {
             isSpacePressed = true;
         }
-        if (isSpacePressed && Input.GetKeyDown(KeyCode.Space) && IsBufferTime() == true)
+        if (isSpacePressed && IsBufferTime() == true && isJumpBufferOn)
         {
             StartCoroutine("JumpBuffer");
 
@@ -189,10 +210,21 @@ public class Player : MonoBehaviour
         anim.SetFloat("Hp", _health);
         if (_health <= 0)
         {
+            Death();
 
-            anim.SetTrigger("Die");
-            death = true;
+
+
         }
+    }
+
+    public void Death() 
+    {
+        
+        CheckpointTriger checkpoints =  GameObject.Find("checkpoint").GetComponent<CheckpointTriger>();
+         transform.position =  checkpoints.checkpoints[DataContainer.checkpointIndex].transform.position + new Vector3(0, 1f);
+            
+
+
     }
 
     public void Attack ()
@@ -208,14 +240,32 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(jumpBufferTime);
-            if (IsGrounded() == true && isSpacePressed)
+            Debug.Log(timesPassed);
+            yield return new WaitForSeconds(jumpBufferWaitTime);
+            if (bufferCdTime / jumpBufferWaitTime >= timesPassed)
             {
-                rigidBody.AddForce(Vector2.up * jumpHeihgt, ForceMode2D.Impulse);
-                gameManager.Inverse();
+                if (IsGrounded() == true && isSpacePressed)
+                {
+                    //rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
+                    rigidBody.AddForce(Vector2.up * jumpHeihgt*2, ForceMode2D.Impulse);
+                    gameManager.Inverse();
+                    isSpacePressed = false;
+                    print("jump");
+                    break;
+                }
+                timesPassed++;
+
+            }
+            else
+            {
                 isSpacePressed = false;
+                timesPassed = 0;
+                print("Break");
                 break;
             }
+
+
+
         }
     }
 }

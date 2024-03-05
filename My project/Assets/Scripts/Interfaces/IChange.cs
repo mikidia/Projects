@@ -4,5 +4,5 @@ using UnityEngine;
 
 interface IChange 
 {
-   
+   void switcher () { }
 }
