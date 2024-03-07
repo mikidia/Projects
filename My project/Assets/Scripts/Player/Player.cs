@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     [NonSerialized]bool death = false;
     [NonSerialized]Animator anim;
     [NonSerialized]GameManager gameManager;
+    [NonSerialized]FallObj fallPlatforms;
 
 
 
@@ -55,6 +56,8 @@ public class Player : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         anim = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
+        
+        
 
     }
     public void Update ()
@@ -183,6 +186,7 @@ public class Player : MonoBehaviour
             rigidBody.AddForce(Vector2.up * jumpHeihgt, ForceMode2D.Impulse);
             gameManager.Switcher();
             gameManager.Inverse();
+
             if (isJumpBufferOn)
             {
                 isSpacePressed = false;

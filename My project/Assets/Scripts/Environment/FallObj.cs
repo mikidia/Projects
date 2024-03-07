@@ -1,6 +1,7 @@
+using System.Collections;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
+
 public class FallObj : MonoBehaviour
 {
 
@@ -32,24 +33,15 @@ public class FallObj : MonoBehaviour
     {
         Player player = collision.gameObject.GetComponent<Player>();
         if (player)
-        {   
-            Invoke("FallPlatform", _timeBeforeFall);
+        {
+            StartCoroutine("FallPlatform");
         }
 
 
     }
-    void FallPlatform ()
-    {
-        rb.isKinematic = false;
-        
-        Invoke("BackPlatform", _timeAfterFall);
-    }
-    void BackPlatform ()
-    {
-        rb.velocity = Vector2.zero;
-        rb.isKinematic = true;
-        moveBack = true;
-    }
+
+
+
     private void Update ()
     {
         if (moveBack)
@@ -59,10 +51,35 @@ public class FallObj : MonoBehaviour
         if (transform.position.y == currentPossition.y)
 
         {
-            moveBack = false;
-
-
+            moveBack = false;   
         }
+        if (gameObject.active == false) 
+        {
+            StopCoroutine("FallPlatform");
+        }
+    }
+
+
+
+
+    IEnumerator FallPlatform () 
+    {   
+        StartCoroutine("BackPlatform");
+        yield return new WaitForSeconds(_timeBeforeFall);
+        rb.isKinematic = false;
+        
+
+
+    }
+
+    IEnumerator BackPlatform () 
+    {
+        yield return new WaitForSeconds(_timeAfterFall + _timeBeforeFall);
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
+        moveBack = true;
+
+
     }
 }
 

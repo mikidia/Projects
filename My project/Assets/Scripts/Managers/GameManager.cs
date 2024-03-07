@@ -6,6 +6,7 @@ using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering.Universal;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,10 +15,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]float minLight;
     [SerializeField]float maxLight;
     [SerializeField]Light2D light;
-    [SerializeField]bool inverse = false;
+    [SerializeField]bool inverse;
 	[SerializeField]bool isLight= true;
     [SerializeField] GameObject[] lightObjects;
     [SerializeField] GameObject[] darkObjects;
+    
 
 
 
@@ -30,11 +32,12 @@ public class GameManager : MonoBehaviour
         lightObjects = GameObject.FindGameObjectsWithTag("Light");
         darkObjects = GameObject.FindGameObjectsWithTag("Dark");
         light =  GameObject.Find("Light 2D").GetComponent<Light2D>();
+        
 
     }
 
 
-    public void FixedUpdate () 
+    public void Update () 
     {
         Switcher();
         Debugs();
@@ -62,7 +65,7 @@ public class GameManager : MonoBehaviour
             }
 
         }
-        else if (!isLight)
+        if (!isLight)
         {
             foreach (GameObject obj in lightObjects)
             {
