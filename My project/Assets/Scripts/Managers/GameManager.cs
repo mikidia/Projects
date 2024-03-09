@@ -1,12 +1,10 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+
 using UnityEngine.Rendering.Universal;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +17,14 @@ public class GameManager : MonoBehaviour
 	[SerializeField]bool isLight= true;
     [SerializeField] GameObject[] lightObjects;
     [SerializeField] GameObject[] darkObjects;
+
+
+
+
+    #region GetersSeters
+    public bool IsLight { get => isLight; set => isLight = value; }
     
+    #endregion
 
 
 

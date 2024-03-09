@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Trap : MonoBehaviour
@@ -10,7 +9,7 @@ public class Trap : MonoBehaviour
     //public GameObject bloodstains;
     [SerializeField] Transform playerObject;
     //private GameObject blood;
-    [SerializeField] int trapDamage = 0;
+
     [SerializeField] bool isMoving;
     [SerializeField] float moveSpeed;
     [SerializeField]bool isReturning;
@@ -38,12 +37,12 @@ public class Trap : MonoBehaviour
     {
         if (isReturning)
         {
-            transform.position = new Vector3(transform.position.x - moveSpeed * Time.deltaTime, transform.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x - (moveSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 
         }
         if (!isReturning)
         {
-            transform.position = new Vector3(transform.position.x + moveSpeed * Time.deltaTime, transform.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x + (moveSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 
 
         }
@@ -55,7 +54,6 @@ public class Trap : MonoBehaviour
 
 
         }
-        Debug.Log(Vector3.Distance(finalCords, transform.position) );
         if (Vector3.Distance(startCords, transform.position) <= 0.5f)
         {
 
@@ -67,13 +65,14 @@ public class Trap : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D (Collider2D collision)
+    private void OnCollisionEnter2D (Collision2D collision)
     {
-        Player player = collision.GetComponent<Player>();
+        Player player = collision.gameObject.GetComponent<Player>();
         if (player != null)
         {
-            player.GetDamage(trapDamage);
+            player.Death();
         }
-
     }
+
+
 }

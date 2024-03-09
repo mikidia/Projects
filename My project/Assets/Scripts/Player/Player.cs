@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 
 public class Player : MonoBehaviour
@@ -8,11 +9,9 @@ public class Player : MonoBehaviour
     #region Declarations
 
     [Header("Movement")]
-
     [SerializeField]int speed;
     [SerializeField]float jumpHeihgt;
     [SerializeField]float groundCheckDistance = 0;
-
     [SerializeField]Vector3 offset;
 
     [Header("Jump Buffer Settings")]
@@ -20,31 +19,28 @@ public class Player : MonoBehaviour
     [SerializeField]bool isJumpBufferOn;
     [SerializeField]float jumpBufferWaitTime;
     [SerializeField]float groundBufferCheckDistance;
-
     [Range(0.01f,9999)]
     [SerializeField] float bufferCdTime ;
-
-
-
-
     [SerializeField]float timesPassed;
+
     [NonSerialized]Vector2 facingDirection;
     [NonSerialized]bool jumpTriger;
 
-
     [Header("Settings")]
-
     [SerializeField]int _health =10;
     [SerializeField]static float xInput;
     [SerializeField]LayerMask whatIsGround;
     [SerializeField]LayerMask whatIsPlatform;
     [SerializeField]int _score=0;
 
-    [NonSerialized]Rigidbody2D rigidBody;
+
     [NonSerialized]bool death = false;
     [NonSerialized]Animator anim;
     [NonSerialized]GameManager gameManager;
+    [NonSerialized]ParticleManager particleManager;
     [NonSerialized]FallObj fallPlatforms;
+    [NonSerialized]Rigidbody2D rigidBody;
+
 
 
 
@@ -56,6 +52,7 @@ public class Player : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         anim = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
+        particleManager = GameObject.Find("ParticleManager").GetComponent<ParticleManager>();
         
         
 
@@ -205,28 +202,20 @@ public class Player : MonoBehaviour
         }
 
     }
-    public void GetDamage (int damage)
-    {
-        _health -= damage;
-
-        //effect.Blood();
-
-        anim.SetFloat("Hp", _health);
-        if (_health <= 0)
-        {
-            Death();
-
-
-
-        }
-    }
 
     public void Death() 
     {
         
         CheckpointTriger checkpoints =  GameObject.Find("checkpoint").GetComponent<CheckpointTriger>();
-         transform.position =  checkpoints.checkpoints[DataContainer.checkpointIndex].transform.position + new Vector3(0, 1f);
-            
+        transform.position =  checkpoints.checkpoints[DataContainer.checkpointIndex].transform.position + new Vector3(0, 1f);
+        Uimanager uimanager = GameObject.Find("UiManager").GetComponent<Uimanager>();
+        gameManager.IsLight = true;
+        
+        uimanager.UpdateDeathCounter();
+        particleManager.BloodParticles();
+
+
+
 
 
     }

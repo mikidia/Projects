@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5226781994821419476}
   - component: {fileID: 7511787262584158173}
-  - component: {fileID: 6070397665398651505}
   - component: {fileID: 4181881607626358953}
-  - component: {fileID: 4954623944177686306}
+  - component: {fileID: 6070397665398651505}
   m_Layer: 8
   m_Name: Circular
   m_TagString: Untagged
@@ -87,21 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6070397665398651505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423132001439057933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12e43386d43934d4198abc316fd734fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotateSpeed: 5
-  playerObject: {fileID: 0}
-  trapDamage: 0
 --- !u!50 &4181881607626358953
 Rigidbody2D:
   serializedVersion: 4
@@ -129,110 +113,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 3
---- !u!60 &4954623944177686306
-PolygonCollider2D:
+--- !u!114 &6070397665398651505
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423132001439057933}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.26, y: 1.25}
-    newSize: {x: 1.26, y: 1.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.21, y: -0.385}
-      - {x: 0.28, y: -0.445}
-      - {x: 0.29, y: -0.555}
-      - {x: 0.38, y: -0.59499997}
-      - {x: 0.45999998, y: -0.515}
-      - {x: 0.48999998, y: -0.465}
-      - {x: 0.48999998, y: -0.315}
-      - {x: 0.42, y: -0.13499999}
-      - {x: 0.5, y: -0.155}
-      - {x: 0.55, y: -0.205}
-      - {x: 0.62, y: -0.205}
-      - {x: 0.63, y: -0.195}
-      - {x: 0.63, y: -0.015}
-      - {x: 0.61, y: 0.044999998}
-      - {x: 0.56, y: 0.095}
-      - {x: 0.51, y: 0.13499999}
-      - {x: 0.39, y: 0.21499999}
-      - {x: 0.45, y: 0.285}
-      - {x: 0.55, y: 0.305}
-      - {x: 0.57, y: 0.325}
-      - {x: 0.59, y: 0.385}
-      - {x: 0.52, y: 0.465}
-      - {x: 0.47, y: 0.49499997}
-      - {x: 0.31, y: 0.505}
-      - {x: 0.26999998, y: 0.465}
-      - {x: 0.19999999, y: 0.42499998}
-      - {x: 0.13, y: 0.415}
-      - {x: 0.16, y: 0.505}
-      - {x: 0.21, y: 0.555}
-      - {x: 0.21, y: 0.625}
-      - {x: -0.04, y: 0.625}
-      - {x: -0.13, y: 0.525}
-      - {x: -0.13, y: 0.42499998}
-      - {x: -0.19999999, y: 0.42499998}
-      - {x: -0.26999998, y: 0.465}
-      - {x: -0.29999998, y: 0.555}
-      - {x: -0.32, y: 0.575}
-      - {x: -0.39, y: 0.575}
-      - {x: -0.44, y: 0.545}
-      - {x: -0.5, y: 0.48499998}
-      - {x: -0.5, y: 0.315}
-      - {x: -0.42, y: 0.235}
-      - {x: -0.42, y: 0.13499999}
-      - {x: -0.55, y: 0.21499999}
-      - {x: -0.63, y: 0.21499999}
-      - {x: -0.63, y: 0.024999999}
-      - {x: -0.61, y: -0.035}
-      - {x: -0.56, y: -0.095}
-      - {x: -0.39, y: -0.205}
-      - {x: -0.45, y: -0.275}
-      - {x: -0.56, y: -0.285}
-      - {x: -0.59, y: -0.375}
-      - {x: -0.47, y: -0.48499998}
-      - {x: -0.32, y: -0.48499998}
-      - {x: -0.14, y: -0.415}
-      - {x: -0.16, y: -0.49499997}
-      - {x: -0.21, y: -0.545}
-      - {x: -0.21, y: -0.625}
-      - {x: -0.02, y: -0.625}
-      - {x: 0.04, y: -0.60499996}
-      - {x: 0.089999996, y: -0.555}
-      - {x: 0.13, y: -0.505}
-  m_UseDelaunayMesh: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e43386d43934d4198abc316fd734fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: 5
+  playerObject: {fileID: 0}
+  isMoving: 1
+  moveSpeed: 5
+  isReturning: 0
+  finalCords: {x: 10, y: 2.13, z: 0}
