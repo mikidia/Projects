@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class DeathTriger : MonoBehaviour
 {
+    [SerializeField]Player player;
     private void OnTriggerEnter2D (Collider2D collision)
     {
-        Player player = collision.gameObject.GetComponent<Player>();
+        player = collision.gameObject.GetComponent<Player>();
         if ( player)
         {
+
             player.Death();
         }
     }

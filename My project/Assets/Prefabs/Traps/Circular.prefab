@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5226781994821419476}
   - component: {fileID: 7511787262584158173}
   - component: {fileID: 4181881607626358953}
+  - component: {fileID: 2060509509385830826}
   - component: {fileID: 6070397665398651505}
   m_Layer: 8
   m_Name: Circular
@@ -95,7 +96,7 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423132001439057933}
   m_BodyType: 0
-  m_Simulated: 0
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
@@ -113,6 +114,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 3
+--- !u!58 &2060509509385830826
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423132001439057933}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.63
 --- !u!114 &6070397665398651505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,8 +162,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 5
-  playerObject: {fileID: 0}
-  isMoving: 1
   moveSpeed: 5
-  isReturning: 0
+  playerObject: {fileID: 0}
   finalCords: {x: 10, y: 2.13, z: 0}
+  isReturning: 0
+  isMoving: 1
+  isHorizontal: 1
+  startPos: {fileID: 0}
+  finalPos: {fileID: 0}

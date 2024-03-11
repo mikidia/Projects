@@ -13,6 +13,7 @@ public class FallObj : MonoBehaviour
     [SerializeField]float _fallTime;
     [SerializeField]float _platformSpeed;
 
+    private bool _isFalling;
 
 
     [SerializeField] float _timeAfterFall;
@@ -39,48 +40,37 @@ public class FallObj : MonoBehaviour
 
 
     }
-
-
-
-    private void Update ()
+    private void OnCollisionExit2D (Collision2D collision)
     {
-        if (moveBack)
+        if(_isFalling == false)
         {
-                transform.position = Vector2.MoveTowards(transform.position, currentPossition, _platformSpeed * Time.deltaTime);
-            }
-        if (transform.position.y == currentPossition.y)
+            StopAllCoroutines();
+        }
 
-        {
-            moveBack = false;   
-        }
-        if (gameObject.active == false) 
-        {
-            StopCoroutine("FallPlatform");
-        }
     }
 
+    public  void ResetStartPos () 
+    {
+        StopAllCoroutines();
+        rb.isKinematic = true;
+        rb.velocity = Vector2.zero;
+        _isFalling = false;
+        transform.position = currentPossition;
 
-
+    }
 
     IEnumerator FallPlatform () 
     {   
-        StartCoroutine("BackPlatform");
+        //StartCoroutine("BackPlatform");
         yield return new WaitForSeconds(_timeBeforeFall);
         rb.isKinematic = false;
-        
-
-
-    }
-
-    IEnumerator BackPlatform () 
-    {
-        yield return new WaitForSeconds(_timeAfterFall + _timeBeforeFall);
-        rb.velocity = Vector2.zero;
-        rb.isKinematic = true;
-        moveBack = true;
-
+        _isFalling = true;
+        yield return new WaitForSeconds(_timeAfterFall);
+        ResetStartPos();
 
     }
+
+
 }
 
 

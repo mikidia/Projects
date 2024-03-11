@@ -5,22 +5,22 @@ public class Trap : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] float rotateSpeed = 1;
-    //EffectManager EffectsSustem;
-    //public GameObject bloodstains;
-    [SerializeField] Transform playerObject;
-    //private GameObject blood;
-
-    [SerializeField] bool isMoving;
     [SerializeField] float moveSpeed;
-    [SerializeField]bool isReturning;
+    [SerializeField] Transform playerObject;
     [SerializeField] Vector3 finalCords;
-    [NonSerialized] Vector3 startCords;
+    [SerializeField] bool isReturning;
+    [SerializeField] bool isMoving;
+    [SerializeField] bool isHorizontal;
+    [SerializeField] Transform startPos,finalPos;
+    [NonSerialized] GameManager gameManager;
 
 
 
     public void Awake ()
     {
-        startCords = transform.position;
+
+        gameManager = GameManager.instance;
+
     }
 
 
@@ -35,26 +35,32 @@ public class Trap : MonoBehaviour
     }
     void Move ()
     {
-        if (isReturning)
+        if (isReturning&& isHorizontal)
         {
             transform.position = new Vector3(transform.position.x - (moveSpeed * Time.deltaTime), transform.position.y, transform.position.z);
-
         }
-        if (!isReturning)
+        if (!isReturning&& isHorizontal)
         {
             transform.position = new Vector3(transform.position.x + (moveSpeed * Time.deltaTime), transform.position.y, transform.position.z);
-
-
+        }
+        if (isReturning && !isHorizontal)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - (moveSpeed * Time.deltaTime),  transform.position.z);
+        }
+        if (!isReturning && !isHorizontal)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + (moveSpeed * Time.deltaTime), transform.position.z);
         }
 
 
-        if (Vector3.Distance(finalCords, transform.position) <= 0.5f)
+
+        if (Vector3.Distance(finalPos.transform.position, transform.position) <= 0.1f)
         {
             isReturning = true;
 
 
         }
-        if (Vector3.Distance(startCords, transform.position) <= 0.5f)
+        if (Vector3.Distance(startPos.transform.position, transform.position) <= 0.1f)
         {
 
             isReturning = false;
@@ -65,14 +71,25 @@ public class Trap : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D (Collision2D collision)
+
+    
+    public void OnTriggerEnter2D (Collider2D collision)
     {
+        print("asdasd");
+
         Player player = collision.gameObject.GetComponent<Player>();
         if (player != null)
         {
             player.Death();
+            gameManager.Light();
+
+
         }
+
     }
+
+
+
 
 
 }

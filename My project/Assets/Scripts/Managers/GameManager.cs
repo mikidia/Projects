@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject[] lightObjects;
     [SerializeField] GameObject[] darkObjects;
 
-
+    public static GameManager instance;
 
 
     #region GetersSeters
@@ -37,6 +37,16 @@ public class GameManager : MonoBehaviour
         lightObjects = GameObject.FindGameObjectsWithTag("Light");
         darkObjects = GameObject.FindGameObjectsWithTag("Dark");
         light =  GameObject.Find("Light 2D").GetComponent<Light2D>();
+        if (instance == null)
+        {
+
+            instance = this;
+
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         
 
     }
@@ -44,8 +54,8 @@ public class GameManager : MonoBehaviour
 
     public void Update () 
     {
-        Switcher();
-        Debugs();
+       Switcher();
+        //Debugs();
     }
 
 
@@ -53,6 +63,14 @@ public class GameManager : MonoBehaviour
         inverse = !inverse;
         StartCoroutine("SmoothChangeLightIntensivity");
     }
+    public void Light ()
+    {
+        inverse = false;
+        isLight = true;
+        StartCoroutine("SmoothChangeLightIntensivity");
+    }
+
+
 
     public void Switcher () 
     {
@@ -87,6 +105,14 @@ public class GameManager : MonoBehaviour
 
 
 
+    }
+
+
+    public void GamePause (bool pauseStatus) 
+    {
+    Time.timeScale = 0;
+    if (pauseStatus) { }
+    
     }
 
 #if UNITY_EDITOR    

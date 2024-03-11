@@ -22,10 +22,14 @@ public class Player : MonoBehaviour
     [Range(0.01f,9999)]
     [SerializeField] float bufferCdTime ;
     [SerializeField]float timesPassed;
-
+#if UNITY_EDITOR
+    [SerializeField]Vector2 facingDirection;
+    [SerializeField]bool jumpTriger;
+#else
     [NonSerialized]Vector2 facingDirection;
     [NonSerialized]bool jumpTriger;
 
+#endif
     [Header("Settings")]
     [SerializeField]int _health =10;
     [SerializeField]static float xInput;
@@ -33,14 +37,24 @@ public class Player : MonoBehaviour
     [SerializeField]LayerMask whatIsPlatform;
     [SerializeField]int _score=0;
 
-
+#if UNITY_EDITOR
+    [SerializeField]bool death = false;
+    [SerializeField]Animator anim;
+    [SerializeField]GameManager gameManager;
+    [SerializeField]ParticleManager particleManager;
+    [SerializeField]Rigidbody2D rigidBody;
+    [SerializeField] FallPlatformsManager fallPlatformsManager;
+#else
     [NonSerialized]bool death = false;
     [NonSerialized]Animator anim;
     [NonSerialized]GameManager gameManager;
     [NonSerialized]ParticleManager particleManager;
-    [NonSerialized]FallObj fallPlatforms;
     [NonSerialized]Rigidbody2D rigidBody;
 
+
+
+
+#endif
 
 
 
@@ -49,12 +63,14 @@ public class Player : MonoBehaviour
 
     private void Awake ()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         anim = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
-        particleManager = GameObject.Find("ParticleManager").GetComponent<ParticleManager>();
-        
-        
+        gameManager = GameManager.instance;
+        particleManager = ParticleManager.instance;
+
+
+
+
 
     }
     public void Update ()
@@ -64,7 +80,9 @@ public class Player : MonoBehaviour
             Jump();
             Attack();
             Movement();
+#if UNITY_EDITOR
             Debugs();
+#endif
             IsGrounded();
         }
 
@@ -181,7 +199,6 @@ public class Player : MonoBehaviour
         {
 
             rigidBody.AddForce(Vector2.up * jumpHeihgt, ForceMode2D.Impulse);
-            gameManager.Switcher();
             gameManager.Inverse();
 
             if (isJumpBufferOn)
@@ -203,14 +220,15 @@ public class Player : MonoBehaviour
 
     }
 
-    public void Death() 
+    public void Death ()
     {
-        
+        gameManager.Light();
+
         CheckpointTriger checkpoints =  GameObject.Find("checkpoint").GetComponent<CheckpointTriger>();
-        transform.position =  checkpoints.checkpoints[DataContainer.checkpointIndex].transform.position + new Vector3(0, 1f);
+        transform.position = checkpoints.checkpoints[DataContainer.checkpointIndex].transform.position + new Vector3(0, 1f);
         Uimanager uimanager = GameObject.Find("UiManager").GetComponent<Uimanager>();
-        gameManager.IsLight = true;
-        
+        fallPlatformsManager = FallPlatformsManager.instance;
+        fallPlatformsManager.ResetPlatformPosition();
         uimanager.UpdateDeathCounter();
         particleManager.BloodParticles();
 
@@ -239,7 +257,7 @@ public class Player : MonoBehaviour
             {
                 if (IsGrounded() == true && isSpacePressed)
                 {
-                    rigidBody.velocity = new Vector2(rigidBody.velocity.x,0);
+                    rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
                     rigidBody.AddForce(Vector2.up * jumpHeihgt, ForceMode2D.Impulse);
                     gameManager.Inverse();
                     isSpacePressed = false;
