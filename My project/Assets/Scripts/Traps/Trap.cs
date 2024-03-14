@@ -53,7 +53,6 @@ public class Trap : MonoBehaviour
         }
 
 
-
         if (Vector3.Distance(finalPos.transform.position, transform.position) <= 0.1f)
         {
             isReturning = true;
