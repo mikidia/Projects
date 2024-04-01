@@ -1,9 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
+
 [RequireComponent(typeof(Rigidbody2D))]
 
 public class FallObj : MonoBehaviour
 {
+
+    
 
     #region Declarations 
     [Header("Platform Settings")]
@@ -40,33 +44,32 @@ public class FallObj : MonoBehaviour
 
 
     }
-    private void OnCollisionExit2D (Collision2D collision)
+    public void OnDisable ()
     {
-        if(_isFalling == false)
-        {
-            StopAllCoroutines();
-        }
-
-    }
-
-    public  void ResetStartPos () 
-    {
-        StopAllCoroutines();
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
         _isFalling = false;
         transform.position = currentPossition;
+    }
+
+
+    public  void ResetStartPos (Vector2 Possition) 
+    {
+       
+        rb.isKinematic = true;
+        rb.velocity = Vector2.zero;
+        _isFalling = false;
+        transform.position = Possition;
 
     }
 
     IEnumerator FallPlatform () 
     {   
-        //StartCoroutine("BackPlatform");
         yield return new WaitForSeconds(_timeBeforeFall);
         rb.isKinematic = false;
         _isFalling = true;
         yield return new WaitForSeconds(_timeAfterFall);
-        ResetStartPos();
+        ResetStartPos(currentPossition);
 
     }
 
