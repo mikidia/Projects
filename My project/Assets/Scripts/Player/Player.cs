@@ -228,7 +228,7 @@ public class Player : MonoBehaviour
         transform.position = checkpoints.checkpoints[DataContainer.checkpointIndex].transform.position + new Vector3(0, 1f);
         Uimanager uimanager = GameObject.Find("UiManager").GetComponent<Uimanager>();
         fallPlatformsManager = FallPlatformsManager.instance;
-        fallPlatformsManager.ResetPlatformPosition();
+        //fallPlatformsManager.ResetPlatformPosition();
         uimanager.UpdateDeathCounter();
         particleManager.BloodParticles();
 
