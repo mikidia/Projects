@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource src;
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip[] backgroundMusic;
+    [SerializeField] private AudioClip[] WinMusic;
 
     public static SoundManager instance;
 
@@ -17,30 +18,31 @@ public class SoundManager : MonoBehaviour
 
 
 
-         src = GetComponent<AudioSource>();
-        
+        src = GetComponent<AudioSource>();
+
+
+
+
+    }
+
+    private void Start ()
+    {
         if (instance == null)
         {
-
             instance = this;
-
         }
         else
         {
             Destroy(gameObject);
         }
-        backgroundMusic
-    
+
     }
 
 
-    public void DeathSound () 
+    public void DeathSound ()
     {
         src.clip = deathSound;
         src.Play ();
-
-
-
 
 
     }

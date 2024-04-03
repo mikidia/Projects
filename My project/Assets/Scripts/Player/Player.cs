@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
         gameManager = GameManager.instance;
         particleManager = ParticleManager.instance;
         fallPlatformsManager = FallPlatformsManager.instance;
-        soundManager = SoundManager.instance;
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
 
 
 
@@ -127,52 +127,53 @@ public class Player : MonoBehaviour
     public void Movement ()
     {
 
-        xInput = Input.GetAxisRaw("Horizontal");
+            xInput = Input.GetAxisRaw("Horizontal");
 
 
 
 
-        if (xInput > 0)
-        {
-            anim.SetInteger("MoveX", 1);
+            if (xInput > 0)
+            {
+                anim.SetInteger("MoveX", 1);
 
 
-        }
-        else if (xInput < 0)
-        {
-            anim.SetInteger("MoveX", -1);
-
-
-
-        }
-        else if (xInput == 0)
-        {
-            anim.SetBool("IsStay", true);
-        }
-
-        if (xInput != 0)
-        {
-
-
-            rigidBody.velocity = new Vector2(xInput * speed, rigidBody.velocity.y);
-            transform.localScale = new Vector2(2 * xInput, transform.localScale.y);
-            anim.SetFloat("Side", transform.localScale.x);
-            anim.SetBool("IsStay", false);
-
-
-        }
-
-        else
-        {
-            rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
-        }
-        if (_isControlEnable == false)
-        {
-            rigidBody.velocity = Vector2.zero;
+            }
+            else if (xInput < 0)
+            {
+                anim.SetInteger("MoveX", -1);
 
 
 
-        }
+            }
+            else if (xInput == 0)
+            {
+                anim.SetBool("IsStay", true);
+            }
+
+            if (xInput != 0)
+            {
+
+
+                rigidBody.velocity = new Vector2(xInput * speed, rigidBody.velocity.y);
+                transform.localScale = new Vector2(2 * xInput, transform.localScale.y);
+                anim.SetFloat("Side", transform.localScale.x);
+                anim.SetBool("IsStay", false);
+
+
+            }
+
+            else
+            {
+                rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
+            }
+            if (_isControlEnable == false)
+            {
+                rigidBody.velocity = Vector2.zero;
+
+
+
+            }
+        
 
     }
 #if UNITY_EDITOR
@@ -364,12 +365,14 @@ public class Player : MonoBehaviour
         gameManager.Light();
 
         CheckpointTriger checkpoints =  GameObject.Find("checkpoint").GetComponent<CheckpointTriger>();
+
         transform.position = checkpoints.checkpoints[DataContainer.checkpointIndex].transform.position + new Vector3(0, 1f);
         StartCoroutine(DeathCd());
         fallPlatformsManager.ResetPlatformPosition();
         Uimanager uimanager = Uimanager.instance;
         uimanager.UpdateDeathCounter();
         particleManager.BloodParticles();
+        rigidBody.velocity = Vector3.zero;
 
 
 

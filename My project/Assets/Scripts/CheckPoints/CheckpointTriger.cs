@@ -37,6 +37,7 @@ public class CheckpointTriger : MonoBehaviour
         {
             if (index > DataContainer.checkpointIndex)
             {
+                Debug.Log(index);
                 DataContainer.checkpointIndex = index;
 
 
